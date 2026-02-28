@@ -4,7 +4,7 @@ metadata:
   name: cyberchef
   namespace: cyberchef
   annotations:
-    cert-manager.io/cluster-issuer: lan-ca-issuer
+    cert-manager.io/common-name: "cyberchef.lab"
 spec:
   rules:
   - host: cyberchef.lab

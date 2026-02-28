@@ -4,7 +4,7 @@ metadata:
   name: homepage
   namespace: homepage
   annotations:
-    cert-manager.io/cluster-issuer: lan-ca-issuer
+    cert-manager.io/common-name: "home.lab"
 spec:
   rules:
   - host: home.lab

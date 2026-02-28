@@ -1,6 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+patches:
+  - target:
+      kind: Ingress
+    patch: |
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1cluster-issuer
+        value: lab-ca-issuer
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1subject-organizations
+        value: Homelab
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1subject-organizationalunits
+        value: Infrastructure
 resources:
   - cyberchef
+  - homepage
   - it-tools
   - speedtest

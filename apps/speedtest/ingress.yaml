@@ -4,7 +4,7 @@ metadata:
   name: speedtest-tracker
   namespace: speedtest
   annotations:
-    cert-manager.io/cluster-issuer: lan-ca-issuer
+    cert-manager.io/common-name: "speedtest.lab"
 spec:
   rules:
   - host: speedtest.lab

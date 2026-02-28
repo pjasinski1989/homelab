@@ -4,7 +4,7 @@ metadata:
   name: it-tools
   namespace: it-tools
   annotations:
-    cert-manager.io/cluster-issuer: lan-ca-issuer
+    cert-manager.io/common-name: "tools.lab"
 spec:
   rules:
   - host: tools.lab
