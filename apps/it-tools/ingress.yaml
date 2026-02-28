@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: it-tools
+  namespace: it-tools
+  annotations:
+    cert-manager.io/cluster-issuer: lan-ca-issuer
+spec:
+  rules:
+  - host: tools.lab
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: it-tools
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - tools.lab
+    secretName: it-tools-tls
