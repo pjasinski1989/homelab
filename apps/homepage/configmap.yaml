@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: homepage
+data:
+  bookmarks.yaml: ""
+  custom.css: ""
+  custom.js: ""
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: |
+    - Monitoring:
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.lab
+            description: Dashboards & Metrics
+            namespace: monitoring
+            app: grafana
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.lab
+            description: Metrics Database
+            namespace: monitoring
+            app: prometheus
+        - Alertmanager:
+            icon: alertmanager.png
+            href: https://alertmanager.lab
+            description: Alert Routing
+            namespace: monitoring
+            app: alertmanager
+    - Infrastructure:
+        - Headlamp:
+            icon: headlamp.png
+            href: https://headlamp.lab
+            description: Kubernetes Dashboard
+            namespace: headlamp
+            app: headlamp
+        - Traefik:
+            icon: traefik.png
+            href: https://traefik.lab/dashboard/
+            description: Ingress Controller
+            namespace: kube-system
+            app: traefik
+        - AdGuard Home:
+            icon: adguard-home.png
+            href: https://adguard.lab
+            description: DNS Ad-Blocker
+            namespace: adguard
+            app: adguard-home
+    - Tools:
+        - IT-Tools:
+            icon: it-tools.png
+            href: https://tools.lab
+            description: Developer Tools
+            namespace: it-tools
+            app: it-tools
+        - CyberChef:
+            icon: cyberchef.png
+            href: https://cyberchef.lab
+            description: Data manipulation toolkit
+            namespace: cyberchef
+            app: cyberchef
+        - Speedtest Tracker:
+            icon: speedtest-tracker.png
+            href: https://speedtest.lab
+            description: Network speed monitoring
+            namespace: speedtest
+            app: speedtest-tracker
+  settings.yaml: |
+    title: rpi homelab
+    favicon: https://kubernetes.io/images/favicon.png
+    headerStyle: clean
+    layout:
+      Monitoring:
+        icon: mdi-chart-line
+      Infrastructure:
+        icon: mdi-server
+      Tools:
+        icon: mdi-toolbox
+  widgets.yaml: |
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "rpi"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+    - search:
+        provider: duckduckgo
+        target: _blank
