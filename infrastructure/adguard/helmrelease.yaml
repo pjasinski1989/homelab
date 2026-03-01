@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adguard-home
+  namespace: adguard
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: adguard-home
+      version: "0.24.0"
+      sourceRef:
+        kind: HelmRepository
+        name: rm3l
+  values:
+    services:
+      dns:
+        type: LoadBalancer
+      http:
+        type: ClusterIP
+      dot:
+        enabled: false
+      doq:
+        enabled: false
+      dnscrypt:
+        enabled: false
+      https:
+        enabled: false
+    ingresses:
+      http:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: lab-ca-issuer
+          cert-manager.io/common-name: adguard.lab
+          cert-manager.io/subject-organizations: Homelab
+          cert-manager.io/subject-organizationalunits: Infrastructure
+        hosts:
+          - host: adguard.lab
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - adguard.lab
+            secretName: adguard-tls
