@@ -18,14 +18,6 @@ spec:
         type: LoadBalancer
       http:
         type: ClusterIP
-      dot:
-        enabled: false
-      doq:
-        enabled: false
-      dnscrypt:
-        enabled: false
-      https:
-        enabled: false
     ingresses:
       http:
         enabled: true
