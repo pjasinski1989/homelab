@@ -7,33 +7,14 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: victoria-metrics-k8s-stack
-      version: "0.72.2"
+      chart: kube-prometheus-stack
+      version: "82.4.3"
       sourceRef:
         kind: HelmRepository
-        name: victoria-metrics
+        name: prometheus-community
   values:
-    victoria-metrics-operator:
-      operator:
-        disable_prometheus_converter: false
-    vmsingle:
-      ingress:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: lab-ca-issuer
-          cert-manager.io/common-name: prometheus.lab
-          cert-manager.io/subject-organizations: Homelab
-          cert-manager.io/subject-organizationalunits: Infrastructure
-        hosts:
-          - prometheus.lab
-        paths:
-          - /
-        tls:
-          - hosts:
-              - prometheus.lab
-            secretName: prometheus-tls
-      spec:
-        retentionPeriod: "7d"
+    alertmanager:
+      alertmanagerSpec:
         storage:
           volumeClaimTemplate:
             spec:
@@ -41,23 +22,7 @@ spec:
                 - ReadWriteOnce
               resources:
                 requests:
-                  storage: 2Gi
-        resources:
-          requests:
-            memory: 128Mi
-          limits:
-            memory: 256Mi
-    vmagent:
-      spec:
-        resources:
-          requests:
-            memory: 64Mi
-          limits:
-            memory: 128Mi
-    vmalert:
-      enabled: true
-    alertmanager:
-      enabled: true
+                  storage: 500Mi
       ingress:
         enabled: true
         annotations:
@@ -73,15 +38,6 @@ spec:
           - hosts:
               - alertmanager.lab
             secretName: alertmanager-tls
-      spec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              accessModes:
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 500Mi
     grafana:
       ingress:
         enabled: true
@@ -105,11 +61,36 @@ spec:
         fsGroup: 472
         runAsGroup: 472
         runAsUser: 472
-    kubeEtcd:
-      enabled: true
-    kubeProxy:
-      enabled: false
-    kubeScheduler:
-      enabled: false
-    kubeControllerManager:
-      enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: lab-ca-issuer
+          cert-manager.io/common-name: prometheus.lab
+          cert-manager.io/subject-organizations: Homelab
+          cert-manager.io/subject-organizationalunits: Infrastructure
+        hosts:
+          - prometheus.lab
+        paths:
+          - /
+        tls:
+          - hosts:
+              - prometheus.lab
+            secretName: prometheus-tls
+      prometheusSpec:
+        podMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        retention: 7d
+        resources:
+          requests:
+            memory: 256Mi
+          limits:
+            memory: 512Mi
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 2Gi
