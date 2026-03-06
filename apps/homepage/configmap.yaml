@@ -86,7 +86,7 @@ data:
           cpu: true
           memory: true
           showLabel: true
-          label: "rpi"
+          label: "k3s"
         nodes:
           show: true
           cpu: true
