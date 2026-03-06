@@ -13,6 +13,7 @@ spec:
         kind: HelmRepository
         name: headlamp
   values:
+    replicaCount: 0
     ingress:
       enabled: true
       annotations:
