@@ -15,7 +15,7 @@ patches:
         value: Infrastructure
 resources:
   - cyberchef
-  - headlamp
+  # - headlamp
   - homepage
   - it-tools
   - speedtest
