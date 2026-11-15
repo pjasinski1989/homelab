@@ -14,8 +14,10 @@ patches:
         path: /metadata/annotations/cert-manager.io~1subject-organizationalunits
         value: Infrastructure
 resources:
-  - cyberchef
-  # - headlamp
+  - adguard
+  - cert-manager
   - homepage
-  # - it-tools
-  # - speedtest
+  - monitoring
+  - reloader
+  - speedtest
+  - traefik
