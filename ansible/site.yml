@@ -1,5 +1,19 @@
 - name: Prepare nodes
   hosts: all
   become: true
-  roles:
-    - prereqs
+  tasks:
+    - name: Enable cgroups
+      ansible.builtin.lineinfile:
+        path: /boot/firmware/cmdline.txt
+        regexp: '^((?!.*{{ item }}).+)$'
+        line: '\1 {{ item }}'
+        backrefs: true
+      loop:
+        - cgroup_enable=cpuset
+        - cgroup_enable=memory
+        - cgroup_memory=1
+      register: cgroups_result
+
+    - name: Reboot
+      ansible.builtin.reboot:
+      when: cgroups_result.changed
