@@ -14,37 +14,43 @@
         - cgroup_memory=1
       register: cgroups_result
 
-    - name: Format NVMe
+    - name: Format NVMe drive if unpartitioned and unformatted
       community.general.filesystem:
         dev: /dev/nvme0n1
         fstype: ext4
         opts: -L data
-      when: ansible_devices.nvme0n1.partitions == {}
+      when:
+        - "'nvme0n1' in ansible_facts['devices']"
+        - ansible_facts['devices']['nvme0n1']['partitions'] == {}
 
-    - name: Mount NVMe
+    - name: Mount NVMe drive
       ansible.posix.mount:
         path: /mnt/data
         src: LABEL=data
         fstype: ext4
-        opts: defaults,nofail
+        opts: defaults,noatime,nofail
         state: mounted
 
     - name: Reboot
       ansible.builtin.reboot:
-      when: cgroups_result.changed
+      when: cgroups_result.changed or rpi_swap_result.changed
 
-- name: Configure k3s servers
-  hosts: servers
+- name: Configure k3s
+  hosts: all
   become: true
   tasks:
     - name: Create k3s config folder
       ansible.builtin.file:
         path: /etc/rancher/k3s
         state: directory
+        mode: '0755'
 
-    - name: Put k3s data and volumes on NVMe
+    - name: Put k3s data, kubelet state, and volumes on NVMe
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/config.yaml
+        mode: '0644'
         content: |
           data-dir: /mnt/data/k3s
           default-local-storage-path: /mnt/data/storage
+          kubelet-arg:
+            - "root-dir=/mnt/data/kubelet"
