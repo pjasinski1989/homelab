@@ -14,6 +14,37 @@
         - cgroup_memory=1
       register: cgroups_result
 
+    - name: Format NVMe
+      community.general.filesystem:
+        dev: /dev/nvme0n1
+        fstype: ext4
+        opts: -L data
+      when: ansible_devices.nvme0n1.partitions == {}
+
+    - name: Mount NVMe
+      ansible.posix.mount:
+        path: /mnt/data
+        src: LABEL=data
+        fstype: ext4
+        opts: defaults,nofail
+        state: mounted
+
     - name: Reboot
       ansible.builtin.reboot:
       when: cgroups_result.changed
+
+- name: Configure k3s servers
+  hosts: servers
+  become: true
+  tasks:
+    - name: Create k3s config folder
+      ansible.builtin.file:
+        path: /etc/rancher/k3s
+        state: directory
+
+    - name: Put k3s data and volumes on NVMe
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/config.yaml
+        content: |
+          data-dir: /mnt/data/k3s
+          default-local-storage-path: /mnt/data/storage
