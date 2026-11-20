@@ -9,6 +9,21 @@
         content: "{{ lookup('config', 'DEFAULT_REMOTE_USER') }} ALL=(ALL) NOPASSWD:ALL\n"
         validate: visudo -cf %s
 
+    - name: Use router DNS so LAN hostnames resolve
+      ansible.builtin.copy:
+        dest: /etc/NetworkManager/conf.d/dns.conf
+        mode: '0644'
+        content: |
+          [global-dns-domain-*]
+          servers={{ ansible_default_ipv4.gateway }}
+      register: dns_result
+
+    - name: Reload NetworkManager
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: reloaded
+      when: dns_result.changed
+
     - name: Enable cgroups
       ansible.builtin.lineinfile:
         path: /boot/firmware/cmdline.txt
@@ -58,7 +73,7 @@
         mode: '0644'
         content: |
           data-dir: /mnt/data/k3s
-          default-local-storage-path: /mnt/data/storage
+          {% if 'servers' in group_names %}default-local-storage-path: /mnt/data/storage{% endif %}
           kubelet-arg:
             - "root-dir=/mnt/data/kubelet"
 
