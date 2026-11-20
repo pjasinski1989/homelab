@@ -2,6 +2,13 @@
   hosts: all
   become: true
   tasks:
+    - name: Passwordless sudo for the Ansible user
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/ansible
+        mode: '0440'
+        content: "{{ lookup('config', 'DEFAULT_REMOTE_USER') }} ALL=(ALL) NOPASSWD:ALL\n"
+        validate: visudo -cf %s
+
     - name: Enable cgroups
       ansible.builtin.lineinfile:
         path: /boot/firmware/cmdline.txt
@@ -33,7 +40,7 @@
 
     - name: Reboot
       ansible.builtin.reboot:
-      when: cgroups_result.changed or rpi_swap_result.changed
+      when: cgroups_result.changed
 
 - name: Configure k3s
   hosts: all
@@ -54,3 +61,27 @@
           default-local-storage-path: /mnt/data/storage
           kubelet-arg:
             - "root-dir=/mnt/data/kubelet"
+
+- name: Install K3s server
+  hosts: servers
+  become: true
+  tasks:
+    - name: Install K3s
+      ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
+      args:
+        creates: /usr/local/bin/k3s
+
+    - name: Fetch kubeconfig
+      ansible.builtin.fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: ./kubeconfig.yml
+        flat: true
+
+    - name: Point kubeconfig to server IP
+      delegate_to: localhost
+      become: false
+      ansible.builtin.replace:
+        path: ./kubeconfig.yml
+        regexp: 'server: https://[^:]+:'
+        replace: "server: https://{{ ansible_default_ipv4.address }}:"
+
