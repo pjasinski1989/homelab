@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blocky
+  namespace: blocky
+data:
+  config.yml: |
+    upstreams:
+      groups:
+        default:
+          - https://dns.quad9.net/dns-query
+          - https://security.cloudflare-dns.com/dns-query
+    customDNS:
+      mapping:
+        zxnak37.ovh: 192.168.1.186
+    blocking:
+      denylists:
+        ads:
+          - https://big.oisd.nl/domainswild
+      # allowlists:
+      #   ads:
+      #     - |
+      #       example.com
+      clientGroupsBlock:
+        default:
+          - ads
+    prometheus:
+      enable: true
+    ports:
+      dns: 53
+      http: 4000
