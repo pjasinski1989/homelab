@@ -30,6 +30,12 @@ data:
             description: Alert Routing
             namespace: monitoring
             app: alertmanager
+        - Gatus:
+            icon: gatus.png
+            href: https://gatus.zxnak37.ovh
+            description: Uptime checks
+            namespace: gatus
+            app: gatus
     - Infrastructure:
         - Headlamp:
             icon: headlamp.png

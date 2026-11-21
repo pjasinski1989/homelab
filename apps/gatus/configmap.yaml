@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus
+  namespace: gatus
+data:
+  config.yaml: |
+    endpoints:
+      - name: Homepage
+        group: apps
+        url: https://home.zxnak37.ovh
+        client: &client
+          dns-resolver: udp://192.168.1.186:53
+        conditions:
+          - "[STATUS] == 200"
+          - "[CERTIFICATE_EXPIRATION] > 240h"
+      - name: Grafana
+        group: apps
+        url: https://grafana.zxnak37.ovh/api/health
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
+      - name: Prometheus
+        group: apps
+        url: https://prometheus.zxnak37.ovh/-/healthy
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
+      - name: Alertmanager
+        group: apps
+        url: https://alertmanager.zxnak37.ovh/-/healthy
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
+      - name: Speedtest Tracker
+        group: apps
+        url: https://speedtest.zxnak37.ovh
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
+      - name: Traefik
+        group: apps
+        url: https://traefik.zxnak37.ovh/dashboard/
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
+      - name: Blocky rpi1
+        group: dns
+        url: 192.168.1.186
+        dns:
+          query-name: grafana.zxnak37.ovh
+          query-type: A
+        conditions:
+          - "[DNS_RCODE] == NOERROR"
+          - "[BODY] == 192.168.1.186"
+      - name: Blocky rpi2
+        group: dns
+        url: 192.168.1.200
+        dns:
+          query-name: grafana.zxnak37.ovh
+          query-type: A
+        conditions:
+          - "[DNS_RCODE] == NOERROR"
+          - "[BODY] == 192.168.1.186"
+      - name: Blocky upstream
+        group: dns
+        url: 192.168.1.186
+        dns:
+          query-name: github.com
+          query-type: A
+        conditions:
+          - "[DNS_RCODE] == NOERROR"
