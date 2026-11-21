@@ -32,33 +32,15 @@ spec:
                   storage: 500Mi
       ingress:
         enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: lab-ca-issuer
-          cert-manager.io/common-name: alertmanager.lab
-          cert-manager.io/subject-organizations: Homelab
-          cert-manager.io/subject-organizationalunits: Infrastructure
         hosts:
-          - alertmanager.lab
+          - alertmanager.zxnak37.ovh
         paths:
           - /
-        tls:
-          - hosts:
-              - alertmanager.lab
-            secretName: alertmanager-tls
     grafana:
       ingress:
         enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: lab-ca-issuer
-          cert-manager.io/common-name: grafana.lab
-          cert-manager.io/subject-organizations: Homelab
-          cert-manager.io/subject-organizationalunits: Infrastructure
         hosts:
-          - grafana.lab
-        tls:
-          - hosts:
-              - grafana.lab
-            secretName: grafana-tls
+          - grafana.zxnak37.ovh
       initChownData:
         enabled: false
       persistence:
@@ -71,19 +53,10 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: lab-ca-issuer
-          cert-manager.io/common-name: prometheus.lab
-          cert-manager.io/subject-organizations: Homelab
-          cert-manager.io/subject-organizationalunits: Infrastructure
         hosts:
-          - prometheus.lab
+          - prometheus.zxnak37.ovh
         paths:
           - /
-        tls:
-          - hosts:
-              - prometheus.lab
-            secretName: prometheus-tls
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

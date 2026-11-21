@@ -3,11 +3,9 @@ kind: Ingress
 metadata:
   name: homepage
   namespace: homepage
-  annotations:
-    cert-manager.io/common-name: "home.lab"
 spec:
   rules:
-  - host: home.lab
+  - host: home.zxnak37.ovh
     http:
       paths:
       - path: /
@@ -17,7 +15,3 @@ spec:
             name: homepage
             port:
               number: 3000
-  tls:
-  - hosts:
-    - home.lab
-    secretName: homepage-tls

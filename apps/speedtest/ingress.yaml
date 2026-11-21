@@ -3,11 +3,9 @@ kind: Ingress
 metadata:
   name: speedtest-tracker
   namespace: speedtest
-  annotations:
-    cert-manager.io/common-name: "speedtest.lab"
 spec:
   rules:
-  - host: speedtest.lab
+  - host: speedtest.zxnak37.ovh
     http:
       paths:
       - path: /
@@ -17,7 +15,3 @@ spec:
             name: speedtest-tracker
             port:
               number: 80
-  tls:
-  - hosts:
-    - speedtest.lab
-    secretName: speedtest-tls

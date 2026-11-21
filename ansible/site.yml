@@ -94,19 +94,27 @@
       environment:
         INSTALL_K3S_CHANNEL: "{{ k3s_channel }}"
 
-    - name: Fetch kubeconfig
-      ansible.builtin.fetch:
+    - name: Read kubeconfig
+      ansible.builtin.slurp:
         src: /etc/rancher/k3s/k3s.yaml
-        dest: "{{ playbook_dir }}/../kubeconfig.yml"
-        flat: true
+      register: kubeconfig
 
-    - name: Point kubeconfig to server IP
+    - name: Save kubeconfig with server IP
       delegate_to: localhost
       become: false
-      ansible.builtin.replace:
-        path: "{{ playbook_dir }}/../kubeconfig.yml"
-        regexp: 'server: https://[^:]+:'
-        replace: "server: https://{{ ansible_default_ipv4.address }}:"
+      ansible.builtin.copy:
+        dest: ~/.kube/rpi.yaml
+        mode: '0600'
+        content: "{{ kubeconfig.content | b64decode | replace('127.0.0.1', ansible_default_ipv4.address) | replace('default', 'k3s@rpi') }}"
+      register: rpi_kubeconfig
+
+    - name: Merge into ~/.kube/config and switch to rpi
+      delegate_to: localhost
+      become: false
+      ansible.builtin.shell: >
+        KUBECONFIG=~/.kube/rpi.yaml:~/.kube/config kubectl config view --flatten > ~/.kube/config.new
+        && mv ~/.kube/config.new ~/.kube/config
+      when: rpi_kubeconfig.changed
 
     - name: Read join token
       ansible.builtin.slurp:
@@ -151,3 +159,18 @@
         src: "{{ playbook_dir }}/../flux/flux-instance.yaml"
         dest: /mnt/data/k3s/server/manifests/flux-instance.yaml
         mode: '0600'
+
+    - name: Create SOPS age secret
+      ansible.builtin.copy:
+        dest: /mnt/data/k3s/server/manifests/sops-age.yaml
+        mode: '0600'
+        content: |
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: sops-age
+            namespace: flux-system
+          stringData:
+            age.agekey: |
+              {{ lookup('file', '~/.config/sops/age/keys.txt') | indent(4) }}
+      no_log: true

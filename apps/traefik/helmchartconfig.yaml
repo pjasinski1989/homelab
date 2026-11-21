@@ -6,15 +6,40 @@ metadata:
 spec:
   failurePolicy: reinstall
   valuesContent: |-
+    certificatesResolvers:
+      letsencrypt:
+        acme:
+          storage: /data/acme.json
+          dnsChallenge:
+            provider: ovh
+    envFrom:
+      - secretRef:
+          name: ovh-credentials
+    persistence:
+      enabled: true
+    ports:
+      web:
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
+      websecure:
+        http:
+          tls:
+            enabled: true
+            certResolver: letsencrypt
+            domains:
+              - main: zxnak37.ovh
+                sans:
+                  - "*.zxnak37.ovh"
     ingressRoute:
       dashboard:
         enabled: true
-        matchRule: Host(`traefik.lab`)
+        matchRule: Host(`traefik.zxnak37.ovh`)
         entryPoints:
-          - web
           - websecure
-        tls:
-          secretName: traefik-dashboard-tls
     metrics:
       prometheus:
         service:

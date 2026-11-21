@@ -2,4 +2,3 @@
 **/secret.dec.yaml
 *.agekey
 age.key
-kubeconfig.yml

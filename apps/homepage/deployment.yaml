@@ -30,7 +30,7 @@ spec:
           containerPort: 3000
         env:
         - name: HOMEPAGE_ALLOWED_HOSTS
-          value: home.lab
+          value: home.zxnak37.ovh
         resources:
           requests:
             memory: "64Mi"

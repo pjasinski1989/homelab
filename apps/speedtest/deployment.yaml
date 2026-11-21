@@ -39,7 +39,7 @@ spec:
               name: speedtest-app-key
               key: APP_KEY
         - name: APP_URL
-          value: https://speedtest.lab
+          value: https://speedtest.zxnak37.ovh
         - name: DISPLAY_TIMEZONE
           value: Europe/Warsaw
         resources:

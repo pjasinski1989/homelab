@@ -14,57 +14,51 @@ data:
     - Monitoring:
         - Grafana:
             icon: grafana.png
-            href: https://grafana.lab
+            href: https://grafana.zxnak37.ovh
             description: Dashboards & Metrics
             namespace: monitoring
             app: grafana
         - Prometheus:
             icon: prometheus.png
-            href: https://prometheus.lab
+            href: https://prometheus.zxnak37.ovh
             description: Metrics Database
             namespace: monitoring
             app: prometheus
         - Alertmanager:
             icon: alertmanager.png
-            href: https://alertmanager.lab
+            href: https://alertmanager.zxnak37.ovh
             description: Alert Routing
             namespace: monitoring
             app: alertmanager
     - Infrastructure:
         - Headlamp:
             icon: headlamp.png
-            href: https://headlamp.lab
+            href: https://headlamp.zxnak37.ovh
             description: Kubernetes Dashboard
             namespace: headlamp
             app: headlamp
         - Traefik:
             icon: traefik.png
-            href: https://traefik.lab/dashboard/
+            href: https://traefik.zxnak37.ovh/dashboard/
             description: Ingress Controller
             namespace: kube-system
             app: traefik
-        - AdGuard Home:
-            icon: adguard-home.png
-            href: https://adguard.lab
-            description: DNS Ad-Blocker
-            namespace: adguard
-            app: adguard-home
     - Tools:
         - IT-Tools:
             icon: it-tools.png
-            href: https://tools.lab
+            href: https://tools.zxnak37.ovh
             description: Developer Tools
             namespace: it-tools
             app: it-tools
         - CyberChef:
             icon: cyberchef.png
-            href: https://cyberchef.lab
+            href: https://cyberchef.zxnak37.ovh
             description: Data manipulation toolkit
             namespace: cyberchef
             app: cyberchef
         - Speedtest Tracker:
             icon: speedtest-tracker.png
-            href: https://speedtest.lab
+            href: https://speedtest.zxnak37.ovh
             description: Network speed monitoring
             namespace: speedtest
             app: speedtest-tracker
