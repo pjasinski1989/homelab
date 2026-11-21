@@ -1,0 +1,24 @@
+# NATS + JetStream on NVMe; benchmark from nats-box: kubectl -n nats exec -it deploy/nats-box -- nats bench ...
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nats
+  namespace: nats
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: nats
+      version: "2.x"
+      sourceRef:
+        kind: HelmRepository
+        name: nats
+  values:
+    config:
+      jetstream:
+        enabled: true
+        fileStore:
+          pvc:
+            size: 5Gi
+    promExporter:
+      enabled: true
