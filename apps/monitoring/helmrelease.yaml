@@ -83,6 +83,7 @@ spec:
         paths:
           - /
       prometheusSpec:
+        enableRemoteWriteReceiver: true # Coroot writes its eBPF metrics here
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         additionalScrapeConfigs:
@@ -92,9 +93,9 @@ spec:
         retention: 7d
         resources:
           requests:
-            memory: 256Mi
-          limits:
             memory: 512Mi
+          limits:
+            memory: 1Gi
         storageSpec:
           volumeClaimTemplate:
             spec:

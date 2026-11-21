@@ -36,6 +36,12 @@ data:
             description: Uptime checks
             namespace: gatus
             app: gatus
+        - Coroot:
+            icon: coroot.png
+            href: https://coroot.zxnak37.ovh
+            description: eBPF service map
+            namespace: coroot
+            app: coroot
     - Infrastructure:
         - Headlamp:
             icon: headlamp.png

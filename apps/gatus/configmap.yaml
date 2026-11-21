@@ -32,6 +32,12 @@ data:
         client: *client
         conditions:
           - "[STATUS] == 200"
+      - name: Coroot
+        group: apps
+        url: https://coroot.zxnak37.ovh/health
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
       - name: Speedtest Tracker
         group: apps
         url: https://speedtest.zxnak37.ovh

@@ -1,0 +1,41 @@
+# Coroot without ClickHouse (no logs/traces/profiles): metrics live in the monitoring Prometheus
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coroot
+  namespace: coroot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: coroot
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: coroot
+    spec:
+      containers:
+        - name: coroot
+          image: ghcr.io/coroot/coroot:1.29.4
+          env:
+            - name: GLOBAL_PROMETHEUS_URL
+              value: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+            - name: GLOBAL_PROMETHEUS_REMOTE_WRITE_URL
+              value: http://monitoring-kube-prometheus-prometheus.monitoring:9090/api/v1/write
+            - name: GLOBAL_REFRESH_INTERVAL
+              value: 15s
+            - name: DATA_DIR
+              value: /data
+            - name: AUTH_ANONYMOUS_ROLE
+              value: Admin
+            - name: DISABLE_USAGE_STATISTICS
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {}
