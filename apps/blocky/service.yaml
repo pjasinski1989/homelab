@@ -5,6 +5,7 @@ metadata:
   namespace: blocky
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/name: blocky
   ports:
