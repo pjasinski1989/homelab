@@ -9,4 +9,5 @@ resources:
   - reloader
   - speedtest
   - system-upgrade
+  - tailscale
   - traefik

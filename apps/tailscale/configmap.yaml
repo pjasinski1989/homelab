@@ -1,0 +1,19 @@
+# Funnel: Gatus status page is public (read-only by nature)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tailscale
+  namespace: tailscale
+data:
+  serve.json: |
+    {
+      "TCP": {"443": {"HTTPS": true}},
+      "Web": {
+        "${TS_CERT_DOMAIN}:443": {
+          "Handlers": {
+            "/": {"Proxy": "http://gatus.gatus.svc"}
+          }
+        }
+      },
+      "AllowFunnel": {"${TS_CERT_DOMAIN}:443": true}
+    }
