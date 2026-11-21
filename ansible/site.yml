@@ -57,6 +57,29 @@
       ansible.builtin.command: findmnt /mnt/data
       changed_when: false
 
+    - name: Install unattended-upgrades
+      ansible.builtin.apt:
+        name: unattended-upgrades
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Run apt update and unattended upgrades daily
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/20auto-upgrades
+        mode: '0644'
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+
+    - name: Also upgrade Raspberry Pi packages (kernel, firmware)
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/51unattended-upgrades-rpi
+        mode: '0644'
+        content: |
+          Unattended-Upgrade::Origins-Pattern {
+            "origin=Raspberry Pi Foundation,codename=${distro_codename}";
+          };
+
     - name: Reboot
       ansible.builtin.reboot:
       when: cgroups_result.changed
@@ -108,7 +131,7 @@
         content: "{{ kubeconfig.content | b64decode | replace('127.0.0.1', ansible_default_ipv4.address) | replace('default', 'k3s@rpi') }}"
       register: rpi_kubeconfig
 
-    - name: Merge into ~/.kube/config and switch to rpi
+    - name: Merge into ~/.kube/config and switch to it
       delegate_to: localhost
       become: false
       ansible.builtin.shell: >

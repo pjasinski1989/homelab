@@ -37,6 +37,29 @@ spec:
         paths:
           - /
     grafana:
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: grafana-com
+              folder: ""
+              type: file
+              options:
+                path: /var/lib/grafana/dashboards/grafana-com
+      dashboards:
+        grafana-com:
+          node-exporter-full:
+            gnetId: 1860
+            revision: 46
+          traefik:
+            gnetId: 17347
+            revision: 9
+          k8s:
+            gnetId: 15661
+            revision: 2
+            datasource:
+              - name: DS__VICTORIAMETRICS-PROD-ALL
+                value: prometheus
       ingress:
         enabled: true
         hosts:
