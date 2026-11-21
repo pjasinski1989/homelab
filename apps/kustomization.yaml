@@ -4,7 +4,9 @@ resources:
   - blocky
   - gatus
   - homepage
+  - kured
   - monitoring
   - reloader
   - speedtest
+  - system-upgrade
   - traefik

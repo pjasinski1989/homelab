@@ -7,15 +7,17 @@ spec:
   interval: 1h
   timeout: 15m
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     remediation:
       retries: 3
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: "82.4.3"
+      version: "82.x"
       sourceRef:
         kind: HelmRepository
         name: prometheus-community

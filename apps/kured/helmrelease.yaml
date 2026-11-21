@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kured
+  namespace: kured
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: kured
+      version: "6.x"
+      sourceRef:
+        kind: HelmRepository
+        name: kubereboot
+  values:
+    configuration:
+      startTime: "03:00"
+      endTime: "05:00"
+      timeZone: Europe/Warsaw

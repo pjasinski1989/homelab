@@ -1,0 +1,47 @@
+# k3s upgrades on the stable channel, 02:00–03:00 (kured reboots 03:00–05:00)
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: server
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+  serviceAccountName: system-upgrade
+  channel: https://update.k3s.io/v1-release/channels/stable
+  window:
+    days: [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+    startTime: "02:00"
+    endTime: "03:00"
+    timeZone: Europe/Warsaw
+  upgrade:
+    image: rancher/k3s-upgrade
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: agent
+  namespace: system-upgrade
+spec:
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+      - key: node-role.kubernetes.io/control-plane
+        operator: DoesNotExist
+  serviceAccountName: system-upgrade
+  channel: https://update.k3s.io/v1-release/channels/stable
+  window:
+    days: [monday, tuesday, wednesday, thursday, friday, saturday, sunday]
+    startTime: "02:00"
+    endTime: "03:00"
+    timeZone: Europe/Warsaw
+  prepare:
+    image: rancher/k3s-upgrade
+    args: ["prepare", "server"]
+  upgrade:
+    image: rancher/k3s-upgrade
