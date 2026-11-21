@@ -127,3 +127,27 @@
         INSTALL_K3S_CHANNEL: "{{ k3s_channel }}"
         K3S_URL: "https://{{ server.ansible_hostname }}:6443"
         K3S_TOKEN: "{{ server.k3s_token.content | b64decode | trim }}"
+
+- name: Install Flux
+  hosts: servers
+  become: true
+  tasks:
+    - name: Install Flux Operator
+      ansible.builtin.get_url:
+        url: https://github.com/controlplaneio-fluxcd/flux-operator/releases/latest/download/install.yaml
+        dest: /mnt/data/k3s/server/manifests/flux-operator.yaml
+        mode: '0600'
+
+    - name: Wait for FluxInstance CRD
+      ansible.builtin.command: k3s kubectl wait --for condition=established crd/fluxinstances.fluxcd.controlplane.io
+      register: crd
+      until: crd.rc == 0
+      retries: 30
+      delay: 5
+      changed_when: false
+
+    - name: Create FluxInstance
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../flux/flux-instance.yaml"
+        dest: /mnt/data/k3s/server/manifests/flux-instance.yaml
+        mode: '0600'
