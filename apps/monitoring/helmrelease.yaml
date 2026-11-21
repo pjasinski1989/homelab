@@ -63,16 +63,16 @@ spec:
               - name: DS__VICTORIAMETRICS-PROD-ALL
                 value: prometheus
           nats:
-            gnetId: 2279
-            revision: 1
-            datasource:
-              - name: DS_NATS-PROMETHEUS
-                value: prometheus
-          nats-jetstream:
-            gnetId: 14725
+            gnetId: 16256
             revision: 2
             datasource:
-              - name: DS__NATS-PROMETHEUS
+              - name: DS_PROMETHEUS
+                value: prometheus
+          nats-jetstream:
+            gnetId: 14862
+            revision: 2
+            datasource:
+              - name: DS_PROMETHEUS
                 value: prometheus
       ingress:
         enabled: true
