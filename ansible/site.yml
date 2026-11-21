@@ -53,6 +53,10 @@
         opts: defaults,noatime,nofail
         state: mounted
 
+    - name: Fail if NVMe isn't mounted
+      ansible.builtin.command: findmnt /mnt/data
+      changed_when: false
+
     - name: Reboot
       ansible.builtin.reboot:
       when: cgroups_result.changed
@@ -73,7 +77,9 @@
         mode: '0644'
         content: |
           data-dir: /mnt/data/k3s
-          {% if 'servers' in group_names %}default-local-storage-path: /mnt/data/storage{% endif %}
+          {% if 'servers' in group_names %}
+          default-local-storage-path: /mnt/data/storage
+          {% endif %}
           kubelet-arg:
             - "root-dir=/mnt/data/kubelet"
 
@@ -85,18 +91,20 @@
       ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -
       args:
         creates: /usr/local/bin/k3s
+      environment:
+        INSTALL_K3S_CHANNEL: "{{ k3s_channel }}"
 
     - name: Fetch kubeconfig
       ansible.builtin.fetch:
         src: /etc/rancher/k3s/k3s.yaml
-        dest: ./kubeconfig.yml
+        dest: "{{ playbook_dir }}/../kubeconfig.yml"
         flat: true
 
     - name: Point kubeconfig to server IP
       delegate_to: localhost
       become: false
       ansible.builtin.replace:
-        path: ./kubeconfig.yml
+        path: "{{ playbook_dir }}/../kubeconfig.yml"
         regexp: 'server: https://[^:]+:'
         replace: "server: https://{{ ansible_default_ipv4.address }}:"
 
@@ -116,5 +124,6 @@
       args:
         creates: /usr/local/bin/k3s
       environment:
+        INSTALL_K3S_CHANNEL: "{{ k3s_channel }}"
         K3S_URL: "https://{{ server.ansible_hostname }}:6443"
         K3S_TOKEN: "{{ server.k3s_token.content | b64decode | trim }}"
