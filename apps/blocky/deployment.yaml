@@ -31,6 +31,10 @@ spec:
             - name: dns-tcp
               containerPort: 53
               protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: dns-tcp
+            periodSeconds: 5
           volumeMounts:
             - name: config
               mountPath: /app/config.yml
