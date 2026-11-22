@@ -56,6 +56,14 @@ data:
             description: Internet speed history
             namespace: speedtest
             app: speedtest-tracker
+    - Storage:
+        - Longhorn:
+            icon: longhorn.png
+            href: https://longhorn.zxnak37.ovh
+            description: Replicated volumes
+            namespace: longhorn-system
+            app: longhorn-ui
+            podSelector: app=longhorn-ui
   settings.yaml: |
     title: rpi homelab
     favicon: https://kubernetes.io/images/favicon.png
@@ -67,6 +75,8 @@ data:
         icon: mdi-database
       Network:
         icon: mdi-lan
+      Storage:
+        icon: mdi-harddisk
   widgets.yaml: |
     - kubernetes:
         cluster:

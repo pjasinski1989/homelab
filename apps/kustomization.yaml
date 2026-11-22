@@ -6,6 +6,7 @@ resources:
   - gatus
   - homepage
   - kured
+  - longhorn
   - monitoring
   - nats
   - reloader

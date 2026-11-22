@@ -1,0 +1,38 @@
+# Replicated volumes on the NVMe (/mnt/data/longhorn), 2 copies; opt-in via storageClassName: longhorn
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 1h
+  timeout: 15m
+  chart:
+    spec:
+      chart: longhorn
+      version: "1.13.x" # Longhorn upgrades must go one minor version at a time
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+  values:
+    preUpgradeChecker:
+      jobEnabled: false # recommended for GitOps installs
+    persistence:
+      defaultClass: false # k3s local-path stays the default
+      defaultClassReplicaCount: 2
+      defaultDataLocality: best-effort
+    csi:
+      kubeletRootDir: /mnt/data/kubelet # matches kubelet root-dir in the k3s config
+      attacherReplicaCount: 1
+      provisionerReplicaCount: 1
+      resizerReplicaCount: 1
+      snapshotterReplicaCount: 1
+    longhornUI:
+      replicas: 1
+    defaultSettings:
+      defaultDataPath: /mnt/data/longhorn
+      defaultDataLocality: best-effort
+      guaranteedInstanceManagerCPU: '{"v1":"5","v2":"5"}'
+    ingress:
+      enabled: true
+      host: longhorn.zxnak37.ovh

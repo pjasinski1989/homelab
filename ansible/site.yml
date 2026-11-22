@@ -80,6 +80,21 @@
             "origin=Raspberry Pi Foundation,codename=${distro_codename}";
           };
 
+    - name: Install Longhorn requirements
+      ansible.builtin.apt:
+        name: [open-iscsi, nfs-common]
+
+    - name: Start iSCSI daemon
+      ansible.builtin.systemd:
+        name: iscsid
+        state: started
+        enabled: true
+
+    - name: Load iSCSI kernel module at boot
+      community.general.modprobe:
+        name: iscsi_tcp
+        persistent: present
+
     - name: Reboot
       ansible.builtin.reboot:
       when: cgroups_result.changed

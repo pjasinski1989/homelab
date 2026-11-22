@@ -50,6 +50,12 @@ data:
         client: *client
         conditions:
           - "[STATUS] == 200"
+      - name: Longhorn
+        group: apps
+        url: https://longhorn.zxnak37.ovh
+        client: *client
+        conditions:
+          - "[STATUS] == 200"
       - name: NATS
         group: apps
         url: tcp://nats.nats.svc:4222
