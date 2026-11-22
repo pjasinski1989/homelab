@@ -20,5 +20,6 @@ spec:
         fileStore:
           pvc:
             size: 5Gi
+            storageClassName: longhorn
     promExporter:
       enabled: true

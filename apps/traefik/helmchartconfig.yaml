@@ -17,6 +17,7 @@ spec:
           name: ovh-credentials
     persistence:
       enabled: true
+      storageClass: longhorn
     ports:
       web:
         http:

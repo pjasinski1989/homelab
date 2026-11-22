@@ -38,6 +38,8 @@ spec:
             secretKeyRef:
               name: speedtest-app-key
               key: APP_KEY
+        - name: PUBLIC_DASHBOARD
+          value: "true"
         - name: APP_URL
           value: https://speedtest.zxnak37.ovh
         - name: DISPLAY_TIMEZONE
