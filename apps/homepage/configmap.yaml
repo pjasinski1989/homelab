@@ -11,67 +11,49 @@ data:
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
-    - Monitoring:
+    - Dashboards:
         - Grafana:
             icon: grafana.png
             href: https://grafana.zxnak37.ovh
-            description: Dashboards & Metrics
+            description: Dashboards & metrics
             namespace: monitoring
             app: grafana
-        - Prometheus:
-            icon: prometheus.png
-            href: https://prometheus.zxnak37.ovh
-            description: Metrics Database
-            namespace: monitoring
-            app: prometheus
-        - Alertmanager:
-            icon: alertmanager.png
-            href: https://alertmanager.zxnak37.ovh
-            description: Alert Routing
-            namespace: monitoring
-            app: alertmanager
+        - Coroot:
+            icon: https://coroot.zxnak37.ovh/static/favicon.ico
+            href: https://coroot.zxnak37.ovh
+            description: eBPF service map
+            namespace: coroot
+            app: coroot
         - Gatus:
             icon: gatus.png
             href: https://gatus.zxnak37.ovh
             description: Uptime checks
             namespace: gatus
             app: gatus
-        - Coroot:
-            icon: coroot.png
-            href: https://coroot.zxnak37.ovh
-            description: eBPF service map
-            namespace: coroot
-            app: coroot
-    - Infrastructure:
-        - Headlamp:
-            icon: headlamp.png
-            href: https://headlamp.zxnak37.ovh
-            description: Kubernetes Dashboard
-            namespace: headlamp
-            app: headlamp
+    - Metrics & alerts:
+        - Prometheus:
+            icon: prometheus.png
+            href: https://prometheus.zxnak37.ovh
+            description: Metrics database
+            namespace: monitoring
+            app: prometheus
+        - Alertmanager:
+            icon: alertmanager.png
+            href: https://alertmanager.zxnak37.ovh
+            description: Alert routing
+            namespace: monitoring
+            app: alertmanager
+    - Network:
         - Traefik:
             icon: traefik.png
             href: https://traefik.zxnak37.ovh/dashboard/
-            description: Ingress Controller
+            description: Ingress & certificates
             namespace: kube-system
             app: traefik
-    - Tools:
-        - IT-Tools:
-            icon: it-tools.png
-            href: https://tools.zxnak37.ovh
-            description: Developer Tools
-            namespace: it-tools
-            app: it-tools
-        - CyberChef:
-            icon: cyberchef.png
-            href: https://cyberchef.zxnak37.ovh
-            description: Data manipulation toolkit
-            namespace: cyberchef
-            app: cyberchef
         - Speedtest Tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.zxnak37.ovh
-            description: Network speed monitoring
+            description: Internet speed history
             namespace: speedtest
             app: speedtest-tracker
   settings.yaml: |
@@ -79,12 +61,12 @@ data:
     favicon: https://kubernetes.io/images/favicon.png
     headerStyle: clean
     layout:
-      Monitoring:
-        icon: mdi-chart-line
-      Infrastructure:
-        icon: mdi-server
-      Tools:
-        icon: mdi-toolbox
+      Dashboards:
+        icon: mdi-view-dashboard
+      Metrics & alerts:
+        icon: mdi-database
+      Network:
+        icon: mdi-lan
   widgets.yaml: |
     - kubernetes:
         cluster:
