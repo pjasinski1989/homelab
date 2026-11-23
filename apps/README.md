@@ -8,6 +8,7 @@
 | Blocky | LAN DNS: `*.zxnak37.ovh`, ad blocking |
 | Longhorn | replicated volumes on the NVMe |
 | kube-prometheus-stack | Prometheus, Alertmanager, Grafana |
+| Loki + Alloy | pod logs in Grafana (Alloy tails `/var/log/pods`, Loki stores 7d) |
 | Coroot | eBPF service map |
 | Gatus | uptime checks, public status page |
 | Tailscale | Funnel: public URL for Gatus, no open ports |

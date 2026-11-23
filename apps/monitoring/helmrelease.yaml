@@ -48,12 +48,16 @@ spec:
         paths:
           - /
     grafana:
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          url: http://loki.logging.svc:3100
       dashboardProviders:
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
             - name: grafana-com
-              folder: ""
+              folder: grafana.com
               type: file
               options:
                 path: /var/lib/grafana/dashboards/grafana-com
