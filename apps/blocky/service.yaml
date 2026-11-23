@@ -15,15 +15,3 @@ spec:
     - name: dns-tcp
       port: 53
       protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: blocky-http
-  namespace: blocky
-spec:
-  selector:
-    app.kubernetes.io/name: blocky
-  ports:
-    - name: http
-      port: 4000

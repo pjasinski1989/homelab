@@ -88,10 +88,6 @@ spec:
         enableRemoteWriteReceiver: true # Coroot writes its eBPF metrics here
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
-        additionalScrapeConfigs:
-          - job_name: blocky
-            static_configs:
-              - targets: ["blocky-http.blocky.svc:4000"]
         retention: 7d
         resources:
           requests:
