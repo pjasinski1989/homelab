@@ -17,7 +17,6 @@ spec:
           name: ovh-credentials
     persistence:
       enabled: true
-      storageClass: longhorn
     podSecurityContext:
       fsGroup: 65532 # Longhorn volumes are root-owned; lets Traefik write /data/acme.json
       fsGroupChangePolicy: OnRootMismatch

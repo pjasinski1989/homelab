@@ -27,7 +27,6 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
               accessModes:
                 - ReadWriteOnce
               resources:
@@ -71,7 +70,6 @@ spec:
         enabled: false
       persistence:
         enabled: true
-        storageClassName: longhorn
         size: 1Gi
       securityContext:
         fsGroup: 472
@@ -97,7 +95,6 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
               accessModes:
                 - ReadWriteOnce
               resources:
