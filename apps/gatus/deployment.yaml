@@ -5,6 +5,8 @@ metadata:
   namespace: gatus
 spec:
   replicas: 1
+  strategy:
+    type: Recreate # RWO volume
   selector:
     matchLabels:
       app.kubernetes.io/name: gatus
@@ -22,7 +24,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: data
+              mountPath: /data
       volumes:
         - name: config
           configMap:
             name: gatus
+        - name: data
+          persistentVolumeClaim:
+            claimName: gatus
