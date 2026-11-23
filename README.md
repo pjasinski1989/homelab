@@ -7,3 +7,5 @@ k3s on Raspberry Pi 5: nodes set up by Ansible, apps deployed by Flux.
 - `apps/`: one folder per app; secrets encrypted with SOPS (age)
 
 Updates: OS by unattended-upgrades, k3s by system-upgrade-controller, reboots by kured.
+
+![Architecture](docs/architecture.svg)
