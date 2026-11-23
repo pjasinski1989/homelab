@@ -22,6 +22,15 @@ spec:
         kind: HelmRepository
         name: prometheus-community
   values:
+    # k3s runs these inside its own binary (and uses SQLite, not etcd): nothing to scrape, alerts fire falsely
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      enabled: false
     alertmanager:
       alertmanagerSpec:
         storage:
