@@ -1,4 +1,4 @@
-# Replicated volumes on the NVMe (/mnt/data/longhorn), 2 copies; opt-in via storageClassName: longhorn
+# Replicated volumes on the NVMe (/mnt/data/longhorn), 2 copies; the default StorageClass
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -18,7 +18,7 @@ spec:
     preUpgradeChecker:
       jobEnabled: false # recommended for GitOps installs
     persistence:
-      defaultClass: false # k3s local-path stays the default
+      defaultClass: true # k3s local-path is disabled
       defaultClassReplicaCount: 2
       defaultDataLocality: best-effort
     csi:
