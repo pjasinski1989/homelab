@@ -56,11 +56,6 @@ data:
         client: *client
         conditions:
           - "[STATUS] == 200"
-      - name: NATS
-        group: apps
-        url: tcp://nats.nats.svc:4222
-        conditions:
-          - "[CONNECTED] == true"
       - name: Blocky rpi1
         group: dns
         url: 192.168.1.186

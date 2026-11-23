@@ -8,7 +8,6 @@ resources:
   - kured
   - longhorn
   - monitoring
-  - nats
   - reloader
   - speedtest
   - system-upgrade

@@ -63,18 +63,6 @@ spec:
             datasource:
               - name: DS__VICTORIAMETRICS-PROD-ALL
                 value: prometheus
-          nats:
-            gnetId: 16256
-            revision: 2
-            datasource:
-              - name: DS_PROMETHEUS
-                value: prometheus
-          nats-jetstream:
-            gnetId: 14862
-            revision: 2
-            datasource:
-              - name: DS_PROMETHEUS
-                value: prometheus
       ingress:
         enabled: true
         hosts:
@@ -104,9 +92,6 @@ spec:
           - job_name: blocky
             static_configs:
               - targets: ["blocky-http.blocky.svc:4000"]
-          - job_name: nats
-            static_configs:
-              - targets: ["nats-0.nats-headless.nats.svc:7777"]
         retention: 7d
         resources:
           requests:
