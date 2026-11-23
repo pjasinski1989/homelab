@@ -71,6 +71,8 @@ spec:
       persistence:
         enabled: true
         size: 1Gi
+      deploymentStrategy:
+        type: Recreate # RWO volume
       securityContext:
         fsGroup: 472
         runAsGroup: 472
