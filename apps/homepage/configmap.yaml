@@ -18,12 +18,6 @@ data:
             description: Dashboards & metrics
             namespace: monitoring
             app: grafana
-        - Coroot:
-            icon: https://coroot.zxnak37.ovh/static/favicon.ico
-            href: https://coroot.zxnak37.ovh
-            description: eBPF service map
-            namespace: coroot
-            app: coroot
         - Gatus:
             icon: gatus.png
             href: https://gatus.zxnak37.ovh
