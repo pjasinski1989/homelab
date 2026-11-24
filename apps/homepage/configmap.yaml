@@ -50,6 +50,11 @@ data:
             description: Ingress & certificates
             namespace: kube-system
             app: traefik
+        - GitHub:
+            icon: github.png
+            href: https://github.com/pjasinski1989/homelab
+            description: Repo
+    - Storage:
         - Longhorn:
             icon: longhorn.png
             href: https://longhorn.zxnak37.ovh
@@ -57,6 +62,10 @@ data:
             namespace: longhorn-system
             app: longhorn-ui
             podSelector: app=longhorn-ui
+        - Backblaze B2:
+            icon: backblaze.png
+            href: https://secure.backblaze.com/b2_buckets.htm
+            description: Volume backups
   settings.yaml: |
     title: rpi homelab
     favicon: https://kubernetes.io/images/favicon.png
@@ -68,6 +77,8 @@ data:
         icon: mdi-heart-pulse
       Cluster:
         icon: mdi-kubernetes
+      Storage:
+        icon: mdi-harddisk
   widgets.yaml: |
     - kubernetes:
         cluster:
