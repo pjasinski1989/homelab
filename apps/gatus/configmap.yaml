@@ -36,12 +36,6 @@ data:
         client: *client
         conditions:
           - "[STATUS] == 200"
-      - name: Speedtest Tracker
-        group: apps
-        url: https://speedtest.zxnak37.ovh
-        client: *client
-        conditions:
-          - "[STATUS] == 200"
       - name: Traefik
         group: apps
         url: https://traefik.zxnak37.ovh/dashboard/

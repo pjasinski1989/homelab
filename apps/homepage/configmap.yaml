@@ -30,19 +30,12 @@ data:
             description: Alert routing
             namespace: monitoring
             app: alertmanager
-    - Health:
         - Gatus:
             icon: gatus.png
             href: https://gatus.zxnak37.ovh
             description: Uptime checks
             namespace: gatus
             app: gatus
-        - Speedtest Tracker:
-            icon: speedtest-tracker.png
-            href: https://speedtest.zxnak37.ovh
-            description: Internet speed history
-            namespace: speedtest
-            app: speedtest-tracker
     - Cluster:
         - Traefik:
             icon: traefik.png
@@ -50,11 +43,6 @@ data:
             description: Ingress & certificates
             namespace: kube-system
             app: traefik
-        - GitHub:
-            icon: github.png
-            href: https://github.com/pjasinski1989/homelab
-            description: Repo
-    - Storage:
         - Longhorn:
             icon: longhorn.png
             href: https://longhorn.zxnak37.ovh
@@ -62,6 +50,11 @@ data:
             namespace: longhorn-system
             app: longhorn-ui
             podSelector: app=longhorn-ui
+    - External:
+        - GitHub:
+            icon: github.png
+            href: https://github.com/pjasinski1989/homelab
+            description: Repo
         - Backblaze B2:
             icon: backblaze.png
             href: https://secure.backblaze.com/b2_buckets.htm
@@ -73,12 +66,10 @@ data:
     layout:
       Monitoring:
         icon: mdi-chart-line
-      Health:
-        icon: mdi-heart-pulse
       Cluster:
         icon: mdi-kubernetes
-      Storage:
-        icon: mdi-harddisk
+      External:
+        icon: mdi-open-in-new
   widgets.yaml: |
     - kubernetes:
         cluster:

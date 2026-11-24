@@ -9,7 +9,6 @@ resources:
   - longhorn
   - monitoring
   - reloader
-  - speedtest
   - system-upgrade
   - tailscale
   - traefik
