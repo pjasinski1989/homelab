@@ -17,3 +17,4 @@ spec:
       startTime: "03:00"
       endTime: "05:00"
       timeZone: Europe/Warsaw
+      drainTimeout: 30m # a stuck drain gives up and uncordons instead of holding the lock forever
