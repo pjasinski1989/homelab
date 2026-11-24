@@ -29,6 +29,9 @@ spec:
       snapshotterReplicaCount: 1
     longhornUI:
       replicas: 1
+    defaultBackupStore:
+      backupTarget: s3://zxnak37-longhorn@eu-central-003/
+      backupTargetCredentialSecret: b2-backup
     defaultSettings:
       defaultDataPath: /mnt/data/longhorn
       defaultDataLocality: best-effort
