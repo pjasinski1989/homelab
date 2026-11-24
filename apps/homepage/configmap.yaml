@@ -11,20 +11,13 @@ data:
   kubernetes.yaml: |
     mode: cluster
   services.yaml: |
-    - Dashboards:
+    - Monitoring:
         - Grafana:
             icon: grafana.png
             href: https://grafana.zxnak37.ovh
-            description: Dashboards & metrics
+            description: Dashboards, metrics & logs
             namespace: monitoring
             app: grafana
-        - Gatus:
-            icon: gatus.png
-            href: https://gatus.zxnak37.ovh
-            description: Uptime checks
-            namespace: gatus
-            app: gatus
-    - Metrics & alerts:
         - Prometheus:
             icon: prometheus.png
             href: https://prometheus.zxnak37.ovh
@@ -37,20 +30,26 @@ data:
             description: Alert routing
             namespace: monitoring
             app: alertmanager
-    - Network:
-        - Traefik:
-            icon: traefik.png
-            href: https://traefik.zxnak37.ovh/dashboard/
-            description: Ingress & certificates
-            namespace: kube-system
-            app: traefik
+    - Health:
+        - Gatus:
+            icon: gatus.png
+            href: https://gatus.zxnak37.ovh
+            description: Uptime checks
+            namespace: gatus
+            app: gatus
         - Speedtest Tracker:
             icon: speedtest-tracker.png
             href: https://speedtest.zxnak37.ovh
             description: Internet speed history
             namespace: speedtest
             app: speedtest-tracker
-    - Storage:
+    - Cluster:
+        - Traefik:
+            icon: traefik.png
+            href: https://traefik.zxnak37.ovh/dashboard/
+            description: Ingress & certificates
+            namespace: kube-system
+            app: traefik
         - Longhorn:
             icon: longhorn.png
             href: https://longhorn.zxnak37.ovh
@@ -63,14 +62,12 @@ data:
     favicon: https://kubernetes.io/images/favicon.png
     headerStyle: clean
     layout:
-      Dashboards:
-        icon: mdi-view-dashboard
-      Metrics & alerts:
-        icon: mdi-database
-      Network:
-        icon: mdi-lan
-      Storage:
-        icon: mdi-harddisk
+      Monitoring:
+        icon: mdi-chart-line
+      Health:
+        icon: mdi-heart-pulse
+      Cluster:
+        icon: mdi-kubernetes
   widgets.yaml: |
     - kubernetes:
         cluster:
