@@ -23,8 +23,8 @@ spec:
       defaultDataLocality: best-effort
     csi:
       kubeletRootDir: /mnt/data/kubelet # matches kubelet root-dir in the k3s config
-      attacherReplicaCount: 1
-      provisionerReplicaCount: 1
+      attacherReplicaCount: 2 # Longhorn adds a PDB (minAvailable 1) to these; 1 replica blocks kured drains
+      provisionerReplicaCount: 2
       resizerReplicaCount: 1
       snapshotterReplicaCount: 1
     longhornUI:
