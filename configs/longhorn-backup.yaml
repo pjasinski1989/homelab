@@ -1,0 +1,16 @@
+# Daily backup to Backblaze B2, keeps only the latest. Opt-in: PVCs labelled
+#   recurring-job-source.longhorn.io: enabled
+#   recurring-job-group.longhorn.io/backup: enabled
+apiVersion: longhorn.io/v1beta2
+kind: RecurringJob
+metadata:
+  name: backup
+  namespace: longhorn-system
+spec:
+  name: backup
+  task: backup
+  cron: "0 0 * * *" # UTC, 01:00 in Warsaw (before system-upgrade at 02:00)
+  retain: 7
+  concurrency: 1
+  groups:
+    - backup
