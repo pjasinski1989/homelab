@@ -1,0 +1,52 @@
+# Rebalances pods once a day, after kured's reboot window (03:00–05:00)
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: descheduler
+  namespace: descheduler
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: descheduler
+      version: "0.x"
+      sourceRef:
+        kind: HelmRepository
+        name: descheduler
+  values:
+    schedule: "30 5 * * *"
+    timeZone: Europe/Warsaw
+    deschedulerPolicy:
+      maxNoOfPodsToEvictPerNode: 5
+      metricsProviders:
+        - source: KubernetesMetrics # metrics-server, built into k3s
+      profiles:
+        - name: default
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                podProtections:
+                  defaultDisabled:
+                    - PodsWithLocalStorage # pods with PVCs may move too: Longhorn volumes follow them
+            - name: RemoveDuplicates
+            - name: RemovePodsViolatingTopologySpreadConstraint
+            - name: LowNodeUtilization
+              args:
+                metricsUtilization:
+                  source: KubernetesMetrics # real usage; requests here are too low to mean much
+                evictableNamespaces:
+                  exclude: [kube-system, longhorn-system]
+                thresholds: # below all of these = underused node
+                  cpu: 50
+                  memory: 40
+                  pods: 50
+                targetThresholds: # above any of these = overused node, pods move off it
+                  cpu: 80
+                  memory: 65
+                  pods: 80
+          plugins:
+            balance:
+              enabled:
+                - RemoveDuplicates
+                - RemovePodsViolatingTopologySpreadConstraint
+                - LowNodeUtilization

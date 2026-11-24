@@ -14,6 +14,7 @@
 | Reloader | restarts pods on config change |
 | system-upgrade-controller | k3s upgrades |
 | kured | node reboots after kernel updates |
+| descheduler | rebalances pods daily at 05:30, after kured's reboots |
 
 ### Conventions
 
