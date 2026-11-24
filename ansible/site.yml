@@ -109,7 +109,7 @@
         state: directory
         mode: '0755'
 
-    - name: Put k3s data and kubelet state on NVMe, no local-path (Longhorn is the storage)
+    - name: Put k3s data and kubelet state on NVMe, no local-path (Longhorn is the storage), reserve RAM for k3s server
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/config.yaml
         mode: '0644'
@@ -119,6 +119,7 @@
             - local-storage
           kubelet-arg:
             - "root-dir=/mnt/data/kubelet"
+            - "system-reserved=memory=768Mi"
       notify: Restart k3s
 
     - name: Install K3s
