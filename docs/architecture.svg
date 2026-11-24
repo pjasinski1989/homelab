@@ -66,7 +66,7 @@
   <rect class="box" x="146" y="302" width="130" height="70" rx="8"/>
   <text class="t" x="160" y="326">Backblaze B2</text>
   <text class="s" x="160" y="345">Longhorn backups</text>
-  <text class="s" x="160" y="361">daily · keeps 1</text>
+  <text class="s" x="160" y="361">daily · keeps 7</text>
   <path class="wire" d="M340 337 H280" marker-end="url(#a)"/>
 
   <text class="s" x="324" y="472">Every node: OS on SD card · NVMe holds k3s data and Longhorn volumes</text>
