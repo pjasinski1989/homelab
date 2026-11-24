@@ -3,6 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: speedtest-config
   namespace: speedtest
+  labels:
+    recurring-job-source.longhorn.io: enabled # Longhorn backup (configs/longhorn-backup.yaml)
+    recurring-job-group.longhorn.io/backup: enabled
 spec:
   accessModes:
   - ReadWriteOnce
