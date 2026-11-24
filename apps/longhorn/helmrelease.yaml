@@ -32,6 +32,7 @@ spec:
     defaultBackupStore:
       backupTarget: s3://zxnak37-longhorn@eu-central-003/
       backupTargetCredentialSecret: b2-backup
+      pollInterval: "3600"
     defaultSettings:
       defaultDataPath: /mnt/data/longhorn
       defaultDataLocality: best-effort
