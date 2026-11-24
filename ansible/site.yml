@@ -36,6 +36,13 @@
         - cgroup_memory=1
       register: cgroups_result
 
+    - name: PCIe Gen 3 for the NVMe (~450 → ~800+ MB/s, not officially supported)
+      ansible.builtin.lineinfile:
+        path: /boot/firmware/config.txt
+        line: dtparam=pciex1_gen=3
+        insertafter: '^\[all\]'
+      register: pcie_result
+
     - name: Format NVMe drive if unpartitioned and unformatted
       community.general.filesystem:
         dev: /dev/nvme0n1
@@ -97,7 +104,8 @@
 
     - name: Reboot
       ansible.builtin.reboot:
-      when: cgroups_result.changed
+      throttle: 1 # one node at a time
+      when: cgroups_result.changed or pcie_result.changed
 
 - name: Install K3s server
   hosts: servers
