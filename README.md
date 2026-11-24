@@ -8,6 +8,7 @@ k3s on Raspberry Pi 5: nodes set up by Ansible, apps deployed by Flux.
 - `configs/`: resources that need CRDs from charts in `apps/`, applied after it
 
 Updates: OS by unattended-upgrades, k3s by system-upgrade-controller, reboots by kured.
+
 Backups: Longhorn, daily to Backblaze B2, opt-in per PVC.
 
 ![Architecture](docs/architecture.svg)

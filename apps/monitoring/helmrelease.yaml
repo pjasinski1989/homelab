@@ -123,7 +123,8 @@ spec:
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
-        retention: 7d
+        retention: 30d # ~0.25 GB/day after the drops above, ~8 GB
+        retentionSize: 16GB # 20Gi volume; oldest blocks go first if it gets full
         resources:
           requests:
             memory: 1Gi
@@ -136,4 +137,4 @@ spec:
                 - ReadWriteOnce
               resources:
                 requests:
-                  storage: 2Gi
+                  storage: 20Gi # the operator doesn't resize the existing PVC: kubectl patch it once
