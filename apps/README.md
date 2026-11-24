@@ -20,5 +20,5 @@
 - **Ingress**: plain `Ingress` with host `<name>.zxnak37.ovh`; no `tls:` block, no cert annotations. Traefik serves the wildcard cert and redirects HTTP to HTTPS. LAN DNS (Blocky) already resolves every subdomain.
 - **Secrets**: `*.enc.yaml`, `sops -e -i <file>` (only `data`/`stringData` get encrypted). Flux decrypts.
 - **Homepage tile**: `apps/homepage/configmap.yaml`. **Uptime check**: `apps/gatus/configmap.yaml`.
-- **Backup**: opt in by labelling the PVC `recurring-job-source.longhorn.io: enabled` + `recurring-job-group.longhorn.io/backup: enabled` (job: `configs/longhorn-backup.yaml`, daily, keeps 7).
+- **Backup**: opt in by labelling the PVC `recurring-job.longhorn.io/source: enabled` + `recurring-job-group.longhorn.io/backup: enabled` (job: `configs/longhorn-backup.yaml`, daily, keeps 7).
 - **2+ replicas**: `topologySpreadConstraints` with `maxSkew: 1`, `nodeTaintsPolicy: Honor`, `matchLabelKeys: [pod-template-hash]`, plus a PDB. No PDB on single-replica apps (blocks kured drains).

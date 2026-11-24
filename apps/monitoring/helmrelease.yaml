@@ -85,7 +85,7 @@ spec:
         enabled: true
         size: 1Gi
         extraPvcLabels: # Longhorn backup (configs/longhorn-backup.yaml)
-          recurring-job-source.longhorn.io: enabled
+          recurring-job.longhorn.io/source: enabled
           recurring-job-group.longhorn.io/backup: enabled
       deploymentStrategy:
         type: Recreate # RWO volume

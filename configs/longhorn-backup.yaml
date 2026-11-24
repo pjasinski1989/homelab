@@ -1,5 +1,5 @@
-# Daily backup to Backblaze B2, keeps only the latest. Opt-in: PVCs labelled
-#   recurring-job-source.longhorn.io: enabled
+# Daily backup to Backblaze B2, keeps 7. Opt-in: PVCs labelled
+#   recurring-job.longhorn.io/source: enabled
 #   recurring-job-group.longhorn.io/backup: enabled
 apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
